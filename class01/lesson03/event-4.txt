@@ -1,0 +1,1 @@
+Apr 22 10:28:03 intrepid kernel: grsec: From 77.243.232.244: denied access of range 9a000 -> 9a723 in /dev/mem by /usr/local/psa/admin/sbin/filwrpr[filwrpr:30952] uid/euid:0/0 gid/egid:0/0, parent /usr/sbin/sw-engine-fpm[sw-engine-fpm:30905] uid/euid:500/500 gid/egid:500/500

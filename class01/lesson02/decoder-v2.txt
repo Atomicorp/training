@@ -1,0 +1,16 @@
+<!--
+Jan 25 15:43:04 ns506188 kernel: grsec: From 10.191.50.94: denied untrusted exec (due to being in untrusted group and file in non-root-owned directory) of /home/testunit2/nikto-2.1.5/nikto.pl by /home/testunit2/nikto-2.1.5/nikto.pl[bash:2462] uid/euid:1001/1001 gid/egid:1002/1002, parent /usr/bin/bash[bash:1322] uid/euid:1001/1001 gid/egid:1002/1002
+
+
+Feb 14 12:33:48 c7-64-dev-scott kernel: grsec: [974e485f7e4b] denied untrusted exec (due to being in untrusted group and file in non-root-owned directory) of /home/sshinn/my-project/test.sh by /home/sshinn/my-project/test.sh[bash:29610] uid/euid:1000/1000 gid/egid:305/305, parent /usr/bin/bash[bash:27799] uid/euid:1000/1000 gid/egid:305/305
+
+-->
+
+
+<decoder name="mydecoder2">
+        <parent>iptables</parent>
+        <prematch offset="after_parent">^grsec: From</prematch>
+        <regex>From (\S+):\.+ of (\S+) by</regex>
+        <order>srcip,filename</order>
+</decoder>
+

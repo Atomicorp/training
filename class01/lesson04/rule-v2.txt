@@ -1,0 +1,12 @@
+  <rule id="110000" level="0">
+    <decoded_as>iptables</decoded_as>
+    <description>grsec rules</description>
+  </rule>
+
+  <rule id="110001" level="8">
+    <if_sid>110000</if_sid>
+    <match>denied untrusted exec</match>
+    <description>Trusted Path Execution policy violation. An untrusted user attempted to execute an untrusted application.</description>
+  </rule>
+
+

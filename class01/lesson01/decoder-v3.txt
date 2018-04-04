@@ -1,0 +1,11 @@
+<!--
+id=firewall  sn=C0EAE483AA50  time="2018-03-02 16:55:16 UTC"  fw=10.241.250.10  pri=6 c=262144 m=98  msg="Connection Opened" dur=0 n=102640191  src=10.110.15.129:51243:X0:  dst=10.31.29.64:443:X3:  proto=tcp/https
+-->
+
+<decoder name="mydecoder">
+  <type>firewall</type>
+  <prematch>^id=\S+\s+sn=\S+\s+time=\.+</prematch>
+  <regex>src=(\S+):</regex>
+  <order>srcip</order>
+</decoder>
+

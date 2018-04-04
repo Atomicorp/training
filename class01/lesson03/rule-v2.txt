@@ -1,0 +1,5 @@
+  <rule id="110000" level="0">
+    <decoded_as>iptables</decoded_as>
+    <description>grsec rules</description>
+  </rule>
+

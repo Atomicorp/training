@@ -1,0 +1,33 @@
+OR_Regex/regex Syntax:
+
+\w  ->  A-Z, a-z, 0-9, '-', '@' characters
+\d  ->  0-9 characters
+\s  ->  For spaces " "
+\t  ->  For tabs.
+\p  ->  ()*+,-.:;<=>?[]!"'#$%&|{} (punctuation characters)
+\W  ->  For anything not \w
+\D  ->  For anything not \d
+\S  ->  For anything not \s
+\.  ->  For anything
+
+
+Modifiers:
++  ->  To match one or more times (eg \w+ or \d+)
+*  ->  To match zero or more times (eg \w* or \p*
+
+Special Characters:
+^ -> To specify the beginning of the text.
+$ -> To specify the end of the text.
+| -> To create an "OR" between multiple patterns.
+
+Character Escaping:
+$ -> \$
+( -> \(
+) -> \)
+\ -> \\
+| -> \|
+
+OS_Match/sregex Syntax
+^ -> To specify the beginning of the text.
+$ -> To specify the end of the text.
+| -> To create an "OR" between multiple patterns.

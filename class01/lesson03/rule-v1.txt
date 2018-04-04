@@ -1,0 +1,5 @@
+  <rule id="110000" level="10">
+    <match>grsec: From</match>
+    <description>grsec rules</description>
+  </rule>
+

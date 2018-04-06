@@ -11,7 +11,7 @@
 
 
   <rule id="110002" level="12" frequency="6" timeframe="120">
-    <if_matched_sid>110000</if_matched_sid>
+    <if_matched_sid>110001</if_matched_sid>
     <same_source_ip />
     <description>Multiple Trusted Path Execution policy violations by the same IP.</description>
     <group>access_denied,</group>

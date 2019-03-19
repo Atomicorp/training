@@ -1,0 +1,27 @@
+<!--
+
+"1/1/2014","01:26:48","78-XR-14-000045","Rad","CHEST AP       X-WISE","CHEST","L\F","AP","deleom","","","","","","0.031","","319.66767857507","141.926534243403","-1","-10000","90","160","6","0.96","","18000959"
+
+
+-->
+
+<!--
+         
+"1/1/2014","01:26:48","78-XR-14-000045","Rad","CHEST AP       X-WISE","CHEST","L\F","AP","deleom","","","","","","0.031","","319.66767857507","141.926534243403","-1","-10000","90","160","6","0.96","","18000959"
+"1/1/2014","07:45:43","78-XR-14-000021","Rad","CHEST AP       X-WISE","CHEST","L\F","AP","sukode","","","","","","0.045","","226.038203443319","106.221416224082","-1","-10000","85","160","14","2.24","","18000959"
+
+    
+     -->
+    
+<decoder name="shimadzu-exam-log1">
+        <prematch>^\S+,\S+,\S+,"Rad"</prematch> 
+</decoder>
+
+<!-- assuming the dap field is null in this one, its going to capture the quotes, we probably need
+          another child decoder for that one -->
+<decoder name="shimadzu-exam-log2">
+        <parent>shimadzu-exam-log1</parent>
+        <regex>^\S+,\S+,\S+,"(\S+)","(\.+)",\S+,\S+,\S+,"(\S+)",\S+,\S+,\S+,\S+,(\S+),"(\S+)",\S+,\S+,"(\S+)","(\S+)","(\S+)","(\S+)","(\S+)","(\S+)","(\S+)",(\S+),(\.+)</regex>
+        <order>shimadzu.exam.protocol,shimadzu.exam.bodypart,shimadzu.exam.operator,shimadzu.exam.dap,shimadzu.exam.absorbeddose,shimadzu.exam.ei,shimadzu.exam.eit,shimadzu.exam.di,shimadzu.exam.kv,shimadzu.exam.ma,shimadzu.exam.ms,shimadzu.exam.mas,shimadzu.exam.sid,shimadzu.exam.sensorsn</order>
+</decoder>
+

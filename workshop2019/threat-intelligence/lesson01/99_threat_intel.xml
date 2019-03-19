@@ -1,0 +1,11 @@
+
+<group name="threat_intelligence">
+        <rule id="60047" level="10">
+      		<if_group>web|attack|attacks|iptables|firewall|sshd</if_group>
+                <list field="srcip" lookup="address_match_key">etc/lists/threat/threat4</list>
+                <description>Atomicorp: IP found on Threat Category 4 Atomicorp RBL - Known Attackers</description>
+        </rule>
+
+
+</group>
+

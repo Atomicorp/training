@@ -1,0 +1,9 @@
+<group name="shimadzu,">
+	<rule id="91000" level="7">
+		<decoded_as>shimadzu-exam-log1</decoded_as>
+		<description>Shimadzu Exam Log</description>
+	</rule>
+
+
+</group>
+

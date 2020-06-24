@@ -1,0 +1,15 @@
+ <rule id="601" level="3"> 
+     <if_sid>600</if_sid> 
+     <action>firewall-drop.sh</action> 
+     <status>add</status> 
+     <description>Host Blocked by firewall-drop.sh Active Response</description> 
+ <group>active_response,</group> 
+ </rule>
+ 
+ <rule id="602" level="3"> 
+     <if_sid>600</if_sid> 
+     <action>firewall-drop.sh</action> 
+     <status>delete</status> 
+     <description>Host Unblocked by firewall-drop.sh Active Response</description> 
+ <group>active_response,</group>
+ </rule>

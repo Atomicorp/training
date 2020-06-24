@@ -1,0 +1,13 @@
+ <command>
+     <name>syscheck_extended</name>
+     <executable>syscheck_extended.sh</executable>
+     <expect>filename</expect>
+ </command>
+
+ <active-response>
+     <command>syscheck_extended</command>
+     <location>server</location>
+     <level>5</level>
+     <rules_group>syscheck</rules_group>
+ </active-response>
+

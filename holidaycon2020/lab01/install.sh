@@ -11,12 +11,12 @@ cp ./conf/httpd.conf /etc/httpd/conf/httpd.conf
 
 if [ ! -d /var/www/html/ossec-demo ]; then 
 	mkdir -p /var/www/html/ossec-demo 
-	cp ./index.html /var/www/html 
+	cp ./index.html /var/www/html/ossec-demo/
 fi
 
 
 echo " Creating htpasswd user" 
-htpasswd $HTPASSWD $USERNAME
+htpasswd -c $HTPASSWD $USERNAME
 echo 
 echo 
 

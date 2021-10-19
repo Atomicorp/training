@@ -1,0 +1,4 @@
+ - pipeline.id: ossec
+   queue.type: persisted
+   path.config: "/etc/logstash/listen.conf"
+

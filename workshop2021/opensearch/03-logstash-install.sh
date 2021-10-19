@@ -6,7 +6,15 @@ fi
 
 if [ "$UID" -ne "$ROOT_UID" ] ; then
         echo "ERROR: You must be root to run this program."
+	echo
         exit 1
+fi
+
+if [ ! -f /var/ossec/logs/alerts/alerts.json ]; then
+	echo "ERROR: /var/ossec/logs/alerts/alerts.json was not detected"
+	echo "  is this a OSSEC Server?"
+	echo
+	exit 1
 fi
 
 

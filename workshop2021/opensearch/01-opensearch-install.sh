@@ -1,38 +1,66 @@
 #!/bin/sh
+VERSION=0.1
 
 
-if [ ! "$UID" ]; then
-        UID=`id -u`
+# Dependencies
+setenforce 0
+sed -i "s/Enforcing/disabled" /etc/selinux/config
+
+sysctl -w vm.max_map_count=262144
+# TODO: vm.max_map_count=262144 into /etc/sysctl.conf
+if ! grep -q vm.max_map_count=262144 /etc/sysctl.conf >/dev/null ; then
+	echo vm.max_map_count=262144 >> /etc/sysctl.conf
 fi
 
-if [ "$UID" -ne "$ROOT_UID" ] ; then
-        echo "ERROR: You must be root to run this program."
-        exit 1
+systemctl stop firewalld
+systemctl disable firewalld
+
+# Dependencies
+yum -y install tar  java vim net-tools
+
+# Users/Groups
+if  ! getent group opensearch > /dev/null 2>&1 ; then
+	groupadd -r opensearch
+fi
+
+if ! getent passwd opensearch >/dev/null 2>&1 ; then
+
+	useradd \
+		--system \
+        	--home-dir /nonexisting \
+        	--gid opensearch \
+                --shell /sbin/nologin \
+                --comment "OpenSearch" \
+                opensearch
 fi
 
 
-if [ ! -d /usr/share/OpenSearch ]; then
-	echo "ERROR: opensearch not installed. Exiting..."
-	exit 1
-fi
+# Directories
+DIRS="/usr/share/OpenSearch"
+for i in $DIRS; do
+	if [ ! -d $i ]; then
+		mkdir -p $i
+	fi
+	chown -R opensearch.opensearch $i
+done
 
-if  [ ! -f opensearch-dashboards-1.1.0-linux-x64.tar.gz ] ; then
-        curl https://artifacts.opensearch.org/releases/bundle/opensearch-dashboards/1.1.0/opensearch-dashboards-1.1.0-linux-x64.tar.gz -o opensearch-dashboards-1.1.0-linux-x64.tar.gz
 
-fi
-
-tar xf opensearch-dashboards-1.1.0-linux-x64.tar.gz
-mkdir -p /usr/share/OpenSearch-Dashboards
-mv opensearch-dashboards-1.1.0/* /usr/share/OpenSearch-Dashboards/
-pushd /usr/share/OpenSearch-Dashboards
-	# TODO: modify config/opensearch_dashboards.yml to server.host 0.0.0.0
-	chown -R opensearch.opensearch /usr/share/OpenSearch-Dashboards
-	# TODO: turn this into a service file
-	su -s /bin/bash opensearch -c "/usr/share/OpenSearch-Dashboards/bin/opensearch-dashboards"
+# package
+curl https://artifacts.opensearch.org/releases/bundle/opensearch/1.1.0/opensearch-1.1.0-linux-x64.tar.gz -o opensearch-1.1.0-linux-x64.tar.gz
+tar xf opensearch-1.1.0-linux-x64.tar.gz
+pushd opensearch-1.1.0
+	mv * /usr/share/OpenSearch/
 popd
 
-# Echos
-# connect to http://192.168.100.208:5601/
-# admin / admin
-# Add data -> global
-# Hamburger 
+# Disable exec in installer
+sed -i "s/^exec/#exec/g" /usr/share/OpenSearch/opensearch-tar-install.sh
+
+# Copy in our config
+cp conf/opensearch.yml /usr/share/OpenSearch/config/
+
+# %install
+su -s /bin/bash opensearch -c "/usr/share/OpenSearch/opensearch-tar-install.sh" 
+cp systemd/opensearch.service /usr/lib/systemd/system/opensearch.service
+systemctl daemon-reload
+systemctl start opensearch
+

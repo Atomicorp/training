@@ -4,14 +4,14 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-Type=notify
+Type=simple
 RuntimeDirectory=OpenSearch
-PrivateTmp=true
+#PrivateTmp=true
 #Environment=ES_HOME=/usr/share/OpenSearch
 #Environment=ES_PATH_CONF=/etc/opensearch/
 #Environment=PID_DIR=/var/run/
 #Environment=ES_SD_NOTIFY=true
-EnvironmentFile=-/etc/sysconfig/opensearch
+#EnvironmentFile=-/etc/sysconfig/opensearch
 
 WorkingDirectory=/usr/share/OpenSearch
 

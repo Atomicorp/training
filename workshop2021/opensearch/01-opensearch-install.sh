@@ -1,10 +1,25 @@
 #!/bin/sh
 VERSION=0.1
 
+echo
+echo "Opensearch installer version ($VERSION)"
+echo
+
+if [ ! "$UID" ]; then
+        UID=`id -u`
+fi
+
+if [ "$UID" -ne "$ROOT_UID" ] ; then
+        echo "ERROR: You must be root to run this program."
+        exit 1
+fi
+
 
 # Dependencies
 setenforce 0
-sed -i "s/Enforcing/disabled" /etc/selinux/config
+if grep -q Enforcing /etc/selinux/config; then
+	sed -i "s/Enforcing/disabled/g" /etc/selinux/config
+fi
 
 sysctl -w vm.max_map_count=262144
 # TODO: vm.max_map_count=262144 into /etc/sysctl.conf
@@ -46,21 +61,22 @@ done
 
 
 # package
-curl https://artifacts.opensearch.org/releases/bundle/opensearch/1.1.0/opensearch-1.1.0-linux-x64.tar.gz -o opensearch-1.1.0-linux-x64.tar.gz
+if [ ! -f opensearch-1.1.0-linux-x64.tar.gz ]; then
+	curl https://artifacts.opensearch.org/releases/bundle/opensearch/1.1.0/opensearch-1.1.0-linux-x64.tar.gz -o opensearch-1.1.0-linux-x64.tar.gz
+fi
 tar xf opensearch-1.1.0-linux-x64.tar.gz
 pushd opensearch-1.1.0
 	mv * /usr/share/OpenSearch/
 popd
-
-# Disable exec in installer
-sed -i "s/^exec/#exec/g" /usr/share/OpenSearch/opensearch-tar-install.sh
-
-# Copy in our config
-cp conf/opensearch.yml /usr/share/OpenSearch/config/
+chown -R opensearch.opensearch /usr/share/OpenSearch/ 
 
 # %install
-su -s /bin/bash opensearch -c "/usr/share/OpenSearch/opensearch-tar-install.sh" 
-cp systemd/opensearch.service /usr/lib/systemd/system/opensearch.service
-systemctl daemon-reload
+su -s /bin/bash opensearch -c "/usr/share/OpenSearch/opensearch-tar-install.sh -d"  
+echo "Bootstrapping, please be patient..."
+sleep 60
+sed -i "s/^#node.name/node.name/g" /usr/share/OpenSearch/config/opensearch.yml
+sed -i "s/^#network.host.*/network.host: 0.0.0.0/g" /usr/share/OpenSearch/config/opensearch.yml
+sed -i "s/^#discovery.seed_hosts.*/discovery.seed_hosts: [\"localhost\"]/g" /usr/share/OpenSearch/config/opensearch.yml
+kill `ps ax |grep java |egrep -v grep |awk '{print $1}'`
 systemctl start opensearch
 

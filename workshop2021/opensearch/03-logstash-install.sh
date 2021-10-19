@@ -1,5 +1,7 @@
 #!/bin/sh
 
+VERSION=0.1
+
 if [ ! "$UID" ]; then
         UID=`id -u`
 fi

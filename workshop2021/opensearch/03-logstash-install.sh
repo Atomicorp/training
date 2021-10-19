@@ -1,5 +1,15 @@
 #!/bin/sh
 
+if [ ! "$UID" ]; then
+        UID=`id -u`
+fi
+
+if [ "$UID" -ne "$ROOT_UID" ] ; then
+        echo "ERROR: You must be root to run this program."
+        exit 1
+fi
+
+
 
 if  ! getent group logstash > /dev/null 2>&1 ; then
         groupadd -r logstash
@@ -11,11 +21,10 @@ if ! getent passwd logstash >/dev/null 2>&1 ; then
 
 fi
 
-
-
+# Groups
+usermod -a -G ossec logstash
 
 DIRS="/usr/share/logstash /var/log/logstash /etc/logstash"
-
 for i in $DIRS; do
 	if [ ! -d $i ]; then
 		mkdir -p $i
@@ -38,12 +47,12 @@ pushd /usr/share/logstash
 popd
 cp /usr/share/logstash/config/* /etc/logstash/
 
-# TODO: fix pipelines.yml
+# Default configs
+cp conf/pipelines.yml /etc/logstash/
+cp conf/listen.conf /etc/logstash/
 
-
-# TODO: 
-
-# TODO: fixes
+# TODO: modify the IP field here
 
 systemctl daemon-reload
+systemctl start logstash
 

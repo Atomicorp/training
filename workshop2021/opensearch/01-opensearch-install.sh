@@ -9,7 +9,7 @@ if [ ! "$UID" ]; then
         UID=`id -u`
 fi
 
-if [ "$UID" -ne "$ROOT_UID" ] ; then
+if [ "$UID" -ne 0 ] ; then
         echo "ERROR: You must be root to run this program."
         exit 1
 fi

@@ -73,10 +73,13 @@ chown -R opensearch.opensearch /usr/share/OpenSearch/
 # %install
 su -s /bin/bash opensearch -c "/usr/share/OpenSearch/opensearch-tar-install.sh -d"  
 echo "Bootstrapping, please be patient..."
-sleep 60
+sleep 120
 sed -i "s/^#node.name/node.name/g" /usr/share/OpenSearch/config/opensearch.yml
 sed -i "s/^#network.host.*/network.host: 0.0.0.0/g" /usr/share/OpenSearch/config/opensearch.yml
 sed -i "s/^#discovery.seed_hosts.*/discovery.seed_hosts: [\"localhost\"]/g" /usr/share/OpenSearch/config/opensearch.yml
 kill `ps ax |grep java |egrep -v grep |awk '{print $1}'`
+
+cp systemd/opensearch.service /usr/lib/systemd/system/
+systemctl daemon-reload
 systemctl start opensearch
 

@@ -2,6 +2,10 @@
 
 VERSION=0.1
 
+echo 
+echo "OpenSearch logstash-oss installer ($VERSION)"
+echo
+
 if [ ! "$UID" ]; then
         UID=`id -u`
 fi
@@ -64,5 +68,9 @@ cp conf/listen.conf /etc/logstash/
 # TODO: modify the IP field here
 
 systemctl daemon-reload
-systemctl start logstash
 
+echo
+echo "To complete the installation, set the IP address of the Opensearch server in /etc/logstash/listen.conf"
+echo "and run:"
+echo "  systemctl start logstash"
+echo

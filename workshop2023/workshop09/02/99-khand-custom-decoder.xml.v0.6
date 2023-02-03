@@ -1,0 +1,39 @@
+<!--
+     Version: 0.5
+
+# A simple login success event for a custom event
+Apr 22 10:28:03 reliant khand: network connection from 77.243.232.244 logged in successfully for the user kirk
+
+# A simple login failure event for a custom event
+Apr 22 10:28:04 reliant khand: connection from 77.243.232.244 login failure for the user kirk
+
+# A simple Audit event for a custom event
+Apr 22 10:28:05 reliant khand: audit event user khan successfully engaged: genesis
+
+
+-->
+
+<decoder name="khand">
+	<program_name>^khand</program_name>
+</decoder>
+
+<!-- our child decoder. Use the PARENT name in any rules later. -->
+<!-- we use these when the log events are different under the same program_name. The key that unites
+     login failure and success is the value "connection from" -->
+<!-- adding offsets truncates the string we will process, this is a performance trick -->
+
+<decoder name="khand-login">
+	<parent>khand</parent>
+	<prematch offset="after_parent">connection from</prematch>
+	<!-- now we can start our key->value phase -->
+	<regex offset="after_prematch">(\S+) \.+ user (\S+)</regex>
+	<order>srcip,user</order>
+</decoder> 
+
+<!-- decoder names are arbitrary at this level -->
+<decoder name="khand-audit">
+	<parent>khand</parent>
+	<prematch offset="after_parent">audit event</prematch>
+	<regex offset="after_parent">user (\S+) \S+ \S+: (\.+)</regex>
+	<order>user,khand_action</order>
+</decoder>

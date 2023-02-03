@@ -1,0 +1,37 @@
+<!-- Version 0.4 -->
+
+<!-- Note that I end this in a , this is required or your group values will get combined into a string
+     you do not want -->
+<group name="khand,">
+  <rule id="210000" level="0">
+    <decoded_as>khand</decoded_as>
+    <!-- Description fields are required, even though this does not generate an alert -->
+    <description>Khand: grouping for rules</description>
+    <!-- I like to use <Vendor Service>: description -->
+  </rule>
+
+  <rule id="210001" level="2">
+	  <if_sid>210000</if_sid>
+	  <match>success</match>
+	  <description>Khand: Login success</description>
+  </rule>
+
+  <rule id="210002" level="3">
+	  <if_sid>210000</if_sid>
+	  <match>failure</match>
+	  <description>Khand: Login failure</description>
+  </rule>
+
+  <rule id="210003" level="3">
+	  <if_sid>210000</if_sid>
+	  <match>audit event</match>
+	  <description>Khand: Audit Event grouping</description>
+  </rule>
+
+  <rule id="210004" level="5">
+	  <if_sid>210000</if_sid>
+	  <match>engaged</match>
+	  <description>Khand: Audit Event type: Engaged</description>
+  </rule>
+
+</group>

@@ -1,0 +1,20 @@
+<!--
+
+Exam rules
+
+
+-->
+
+<group name="myapp,">
+
+<!-- Task 4: Create a "bucket" for all traffic from your parent decoder in Task 1, with the ruleid of 200000 -->
+
+<!-- Task 5: Create an atomic rule that reads the "bucket" from Task 4, and detects login success with a ruleid of 200001 and a level of 2 -->
+
+<!-- Task 5: Create an atomic rule that reads the "bucket" from Task 4, and detects login failuers with a ruleid of 200002 and a level of 5 -->
+
+<!-- Task 6: Create a composite rule that detects 3 login failures from rule 200002 in 60 seconds from the same_source with the rule ID of 200003 and a level of 6  -->
+
+<!-- Task 7: Create an atomic rule that reads from the bucket from task 4, and detects an Action CREATE event from Task 3 with a rule ID of 200004 and a level of 3 -->
+
+</group>

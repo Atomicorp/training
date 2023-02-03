@@ -1,0 +1,10 @@
+# A simple login success event for a custom event
+Apr 22 10:28:03 reliant khand: network connection from 77.243.232.244 logged in successfully for the user kirk
+
+# A simple login failure event for a custom event
+Apr 22 10:28:04 reliant khand: connection from 77.243.232.244 login failure for the user kirk
+
+# A simple Audit event for a custom event
+Apr 22 10:28:05 reliant khand: audit event user khan successfully engaged: genesis
+
+

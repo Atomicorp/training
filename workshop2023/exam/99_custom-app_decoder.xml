@@ -1,0 +1,18 @@
+<!--
+# Sample 1: This is a successful login for the user pgriffin from 10.11.12.13
+Jan  1 11:01:14 rocky8 myapp[788381]: login successful for pgriffin from 10.11.12.13
+
+# Sample 2: This is a successful login for the user oracle from 192.168.100.1
+Jan  1 11:02:19 rocky8 myapp[831387]: login failure for oracle from 192.168.100.1
+
+# Sample 3: This is an audit record indicating the user pgriffin has created a new document in the application.
+Jan  1 11:02:19 rocky8 myapp[831387]: Action CREATE by user pgriffin document name: my-example123.txt
+
+-->
+
+
+<!-- Task 1: Create a parent decoder that captures all traffic for the program_name myapp -->
+
+<!-- Task 2: Create a child decoder that captures login failures and successes, and assigns the username to the key: username, and the IP address to the key srcip --> 
+
+<!-- Task 3: Create a child decoder that captures the document create action, and assigns the username to the key: username, and the document to the key: document --> 
